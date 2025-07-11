@@ -10,21 +10,13 @@ import (
 	"github.com/donderom/bubblon"
 )
 
-const help = `Usage: sqwat <input>
-
-Arguments:
-  input        The input SQuAD JSON file
-
-Example:
-  sqwat train-v2.0.json`
-
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Println(help)
-		os.Exit(1)
+	model, err := model()
+	if err != nil {
+		fail(err)
 	}
 
-	controller, err := bubblon.New(splash.New(os.Args[1]))
+	controller, err := bubblon.New(model)
 	if err != nil {
 		fail(err)
 	}
@@ -38,6 +30,25 @@ func main() {
 	if m, ok := m.(bubblon.Controller); ok && m.Err != nil {
 		fail(m.Err)
 	}
+}
+
+func model() (tea.Model, error) {
+	if len(os.Args) < 2 {
+		return splash.NewPicker("."), nil
+	}
+
+	path := os.Args[1]
+
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		return nil, err
+	}
+
+	if fileInfo.IsDir() {
+		return splash.NewPicker(path), nil
+	}
+
+	return splash.New(path), nil
 }
 
 func fail(err error) {
