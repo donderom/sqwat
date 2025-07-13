@@ -51,6 +51,16 @@ var (
 		key.WithHelp("esc", "cancel"),
 	)
 
+	More key.Binding = key.NewBinding(
+		key.WithKeys("?"),
+		key.WithHelp("?", "more"),
+	)
+
+	CloseMore key.Binding = key.NewBinding(
+		key.WithKeys("?"),
+		key.WithHelp("?", "close more"),
+	)
+
 	Save key.Binding = key.NewBinding(
 		key.WithKeys("ctrl+s"),
 		key.WithHelp("ctrl+s", "save"),
