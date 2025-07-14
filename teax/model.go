@@ -165,6 +165,13 @@ func (m Model[Item]) HelpView() string {
 		return helpView(m.Mode.KeyMap())
 	}
 
+	if len(m.Coll.All()) == 0 {
+		if _, ok := m.List.keyHelp[keyset.Esc.Help()]; ok {
+			return helpView(keyset.Bindings(keyset.Create, keyset.Esc, keyset.Quit))
+		}
+		return helpView(keyset.Bindings(keyset.Create, keyset.Quit))
+	}
+
 	return helpView(m.List)
 }
 

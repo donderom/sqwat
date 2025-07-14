@@ -78,6 +78,7 @@ var (
 		keyset.Create,
 		keyset.Edit,
 		keyset.Delete,
+		keyset.Esc,
 	}
 
 	fullKeys []key.Binding = []key.Binding{

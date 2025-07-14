@@ -18,6 +18,7 @@ type model = list.Model
 
 type List[T list.DefaultItem] struct {
 	model
+	keyHelp map[key.Help]struct{}
 }
 
 func NewList[T list.DefaultItem](
@@ -45,7 +46,15 @@ func NewList[T list.DefaultItem](
 	list.SetShowHelp(false)
 	list.KeyMap.Quit = keyset.Quit
 
-	return List[T]{model: list}
+	keyHelp := make(map[key.Help]struct{}, len(d.FullHelpKeys))
+	for _, k := range d.FullHelpKeys {
+		keyHelp[k.Help()] = struct{}{}
+	}
+
+	return List[T]{
+		model:   list,
+		keyHelp: keyHelp,
+	}
 }
 
 func (m List[T]) Update(msg tea.Msg) (List[T], tea.Cmd) {
