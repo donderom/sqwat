@@ -1,12 +1,12 @@
 package teax
 
 import (
+	"github.com/donderom/sqwat/keyset"
+	"github.com/donderom/sqwat/style"
+
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
-
-	"github.com/donderom/sqwat/keyset"
-	"github.com/donderom/sqwat/style"
 )
 
 type Confirmation[M tea.Msg] string

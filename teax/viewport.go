@@ -4,15 +4,15 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/donderom/sqwat/keyset"
+	"github.com/donderom/sqwat/style"
+	"github.com/donderom/sqwat/text"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/reflow/wordwrap"
-
-	"github.com/donderom/sqwat/keyset"
-	"github.com/donderom/sqwat/style"
-	"github.com/donderom/sqwat/text"
 )
 
 var viewportStyle lipgloss.Style = lipgloss.NewStyle().

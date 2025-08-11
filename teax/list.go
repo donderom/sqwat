@@ -3,13 +3,13 @@ package teax
 import (
 	"time"
 
+	"github.com/donderom/sqwat/keyset"
+	"github.com/donderom/sqwat/style"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
-
-	"github.com/donderom/sqwat/keyset"
-	"github.com/donderom/sqwat/style"
 )
 
 const statusMessageLifetime = 5 * time.Second
