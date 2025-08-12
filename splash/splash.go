@@ -52,9 +52,8 @@ func (m Splash) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, bubblon.Fail(msg.err)
 
 	case loaded:
-		saver := teax.NewSaver(m.save(msg.dataset))
-		model := app.New(msg.dataset, m.filename, saver)
-
+		dataset := dataset{data: msg.dataset, filename: m.filename}
+		model := app.New(msg.dataset, m.filename, dataset)
 		return m, bubblon.Replace(model)
 
 	case tea.WindowSizeMsg:
@@ -94,21 +93,26 @@ func (m Splash) load() tea.Cmd {
 	}
 }
 
-func (m Splash) save(dataset *squad.SQuAD) func() error {
-	return func() error {
-		file, err := os.Create(m.filename)
-		if err != nil {
-			return err
-		}
+type dataset struct {
+	data     *squad.SQuAD
+	filename string
+}
 
-		if err = dataset.Save(file); err != nil {
-			return err
-		}
+var _ teax.Dataset = dataset{}
 
-		if err = file.Close(); err != nil {
-			return err
-		}
-
-		return nil
+func (d dataset) Save() error {
+	file, err := os.Create(d.filename)
+	if err != nil {
+		return err
 	}
+
+	if err = d.data.Save(file); err != nil {
+		return err
+	}
+
+	if err = file.Close(); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -41,7 +41,7 @@ var (
 	}
 )
 
-func New(qa *squad.QA, context []rune, saver teax.Saver) Question {
+func New(qa *squad.QA, context []rune, dataset teax.Dataset) Question {
 	delegate := teax.Delegate[Item]{
 		Style:         answerStyle(context, qa.Impossible),
 		ItemName:      qa.Modifier() + "answer",
@@ -63,7 +63,7 @@ func New(qa *squad.QA, context []rune, saver teax.Saver) Question {
 		Model: teax.Model[Item]{
 			List:     teax.NewList(qa.Answers(), qa.Question, delegate),
 			Coll:     qa,
-			Saver:    saver,
+			Dataset:  dataset,
 			Form:     form,
 			NewModel: func(_ *Item) tea.Model { return nil },
 			Actions:  actions,

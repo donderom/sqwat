@@ -76,15 +76,15 @@ var (
 	}
 )
 
-func New(dataset *squad.SQuAD, title string, saver teax.Saver) App {
+func New(squad *squad.SQuAD, title string, dataset teax.Dataset) App {
 	return App{
 		Model: teax.Model[Item]{
-			List:  teax.NewList(dataset.Articles, title, delegate),
-			Coll:  dataset,
-			Saver: saver,
-			Form:  form,
+			List:    teax.NewList(squad.Articles, title, delegate),
+			Coll:    squad,
+			Dataset: dataset,
+			Form:    form,
 			NewModel: func(item *Item) tea.Model {
-				return article.New(item, saver)
+				return article.New(item, dataset)
 			},
 			Actions: actions,
 		},

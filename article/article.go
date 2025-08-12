@@ -95,15 +95,15 @@ var (
 	}
 )
 
-func New(article *squad.Article, saver teax.Saver) Article {
+func New(article *squad.Article, dataset teax.Dataset) Article {
 	return Article{
 		Model: teax.Model[Item]{
-			List:  teax.NewList(article.Paragraphs, article.Title(), delegate),
-			Coll:  article,
-			Saver: saver,
-			Form:  form,
+			List:    teax.NewList(article.Paragraphs, article.Title(), delegate),
+			Coll:    article,
+			Dataset: dataset,
+			Form:    form,
 			NewModel: func(item *Item) tea.Model {
-				return paragraph.New(item, article.Title(), saver)
+				return paragraph.New(item, article.Title(), dataset)
 			},
 			Actions: actions,
 		},

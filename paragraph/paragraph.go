@@ -50,7 +50,11 @@ var (
 	}
 )
 
-func New(paragraph *squad.Paragraph, title string, saver teax.Saver) Paragraph {
+func New(
+	paragraph *squad.Paragraph,
+	title string,
+	dataset teax.Dataset,
+) Paragraph {
 	delegate := teax.Delegate[Item]{
 		Style:           questionStyle(paragraph),
 		ItemName:        "question",
@@ -75,12 +79,12 @@ func New(paragraph *squad.Paragraph, title string, saver teax.Saver) Paragraph {
 
 	return Paragraph{
 		Model: teax.Model[Item]{
-			List:  teax.NewList(paragraph.QAs, title, delegate),
-			Coll:  paragraph,
-			Saver: saver,
-			Form:  form,
+			List:    teax.NewList(paragraph.QAs, title, delegate),
+			Coll:    paragraph,
+			Dataset: dataset,
+			Form:    form,
 			NewModel: func(item *Item) tea.Model {
-				return question.New(item, context, saver)
+				return question.New(item, context, dataset)
 			},
 			Actions: actions,
 		},

@@ -10,13 +10,24 @@ import (
 	"github.com/donderom/bubblon"
 )
 
+type Dataset interface {
+	Save() error
+}
+
+type Synced[Item list.DefaultItem] struct {
+	Item   Item
+	Action Action[Item]
+	Err    error
+	Index  int
+}
+
 type Model[Item list.DefaultItem] struct {
 	List     List[Item]
 	Actions  Actions[Item]
 	Form     Form[Item]
 	Coll     Collection[Item]
 	Mode     Mode
-	Saver    Saver
+	Dataset  Dataset
 	NewModel func(*Item) tea.Model
 	InSync   bool
 }
@@ -190,7 +201,7 @@ func (m Model[Item]) Sync(
 				Action: action,
 				Index:  index,
 				Item:   item,
-				Err:    m.Saver.Save(),
+				Err:    m.Dataset.Save(),
 			}
 		},
 	)
