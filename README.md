@@ -37,3 +37,7 @@ sqwat train-v2.0.json
 ```
 
 The original SQuAD dataset files can be found [here](https://github.com/rajpurkar/SQuAD-explorer/tree/master/dataset).
+
+---
+
+*Built with [bubblon](https://github.com/donderom/bubblon).*
