@@ -26,8 +26,8 @@ github.com/charmbracelet/x/term v0.2.1 h1:AQeHeLZ1OqSXhrAWpYUtZyX1T3zVxfpZuEQMIQ
 github.com/charmbracelet/x/term v0.2.1/go.mod h1:oQ4enTYFV7QN4m0i9mzHrViD7TQKvNEEkHUMCmsxdUg=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/donderom/bubblon v1.1.0 h1:tq478IaXvJg93McoOWfXiUoBK+XZOmF5czXMGOraF5A=
-github.com/donderom/bubblon v1.1.0/go.mod h1:CleIbT7Fg9MPH5X6Z7uy/txSBSTYmWpKUc1MuYXdP1w=
+github.com/donderom/bubblon v1.2.0 h1:uf4zxhKSuqUSLZI7UFHDlCxNL5ivrOiJWJ6eKfB7bAc=
+github.com/donderom/bubblon v1.2.0/go.mod h1:CleIbT7Fg9MPH5X6Z7uy/txSBSTYmWpKUc1MuYXdP1w=
 github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=
 github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
 github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f h1:Y/CXytFA4m6baUTXGLOoWe4PQhGxaX0KpnayAqC48p4=
