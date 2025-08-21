@@ -7,9 +7,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/charmbracelet/bubbles/list"
-
 	"github.com/donderom/sqwat/squad"
+
+	"github.com/charmbracelet/bubbles/list"
 )
 
 type ItemType uint8
