@@ -227,7 +227,10 @@ func TestValidateDupQuestions(t *testing.T) {
 
 	for i, result := range results {
 		path[validation.Question] = i
-		assert.Equal(t, "Duplicate question with a different type", result.Message)
+		assert.Equal(t,
+			"Duplicate question with impossible counterpart",
+			result.Message,
+		)
 		assert.Equal(t, validation.Question, result.Type)
 		assert.Equal(t, path, result.Path)
 	}
