@@ -145,7 +145,7 @@ var ValidateNoAnswers = validateQuestion(
 )
 
 var ValidateDupQuestions = validateQuestion(
-	"Duplicate question with a different type",
+	"Duplicate question with impossible counterpart",
 	func(qa squad.QA, para squad.Paragraph) bool {
 		question := strings.TrimSpace(qa.Question)
 		if question == "" {
