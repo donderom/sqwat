@@ -2,6 +2,7 @@ package paragraph
 
 import (
 	"slices"
+	"strings"
 
 	"github.com/donderom/sqwat/answer"
 	"github.com/donderom/sqwat/keyset"
@@ -47,6 +48,7 @@ var (
 		keyset.Prev,
 		keyset.Add,
 		keyset.Invert,
+		keyset.Status,
 	}
 )
 
@@ -54,6 +56,7 @@ func New(
 	paragraph *squad.Paragraph,
 	title string,
 	dataset teax.Dataset,
+	parent func() tea.Model,
 ) Paragraph {
 	delegate := teax.Delegate[Item]{
 		Style:           questionStyle(paragraph),
@@ -84,9 +87,10 @@ func New(
 			Dataset: dataset,
 			Form:    form,
 			NewModel: func(item *Item) tea.Model {
-				return question.New(item, context, dataset)
+				return question.New(item, context, dataset, nil)
 			},
 			Actions: actions,
+			Parent:  parent,
 		},
 		viewport:  teax.NewViewport[squad.Answer](),
 		paragraph: paragraph,
@@ -228,7 +232,9 @@ func questionStyle(p *squad.Paragraph) teax.StyleFunc[Item] {
 				}
 
 				if slices.IndexFunc(p.QAs, func(qa squad.QA) bool {
-					return qa.Question == item.Question && qa.Id != item.Id
+					question := strings.TrimSpace(item.Question)
+					equestion := question == strings.TrimSpace(qa.Question)
+					return equestion && qa.Id != item.Id
 				}) != -1 {
 					border := style.Border.Dup
 					styles.NormalTitle = border.Apply(styles.NormalTitle)

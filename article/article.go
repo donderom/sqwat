@@ -84,6 +84,7 @@ var (
 	fullKeys []key.Binding = []key.Binding{
 		keyset.Next,
 		keyset.Prev,
+		keyset.Status,
 	}
 
 	delegate teax.Delegate[Item] = teax.Delegate[Item]{
@@ -95,7 +96,11 @@ var (
 	}
 )
 
-func New(article *squad.Article, dataset teax.Dataset) Article {
+func New(
+	article *squad.Article,
+	dataset teax.Dataset,
+	parent func() tea.Model,
+) Article {
 	return Article{
 		Model: teax.Model[Item]{
 			List:    teax.NewList(article.Paragraphs, article.Title(), delegate),
@@ -103,9 +108,10 @@ func New(article *squad.Article, dataset teax.Dataset) Article {
 			Dataset: dataset,
 			Form:    form,
 			NewModel: func(item *Item) tea.Model {
-				return paragraph.New(item, article.Title(), dataset)
+				return paragraph.New(item, article.Title(), dataset, nil)
 			},
 			Actions: actions,
+			Parent:  parent,
 		},
 		viewport: teax.NewViewport[squad.Answer](),
 	}

@@ -75,6 +75,11 @@ var (
 		key.WithKeys("i"),
 		key.WithHelp("i", "invert possibility"),
 	)
+
+	Status key.Binding = key.NewBinding(
+		key.WithKeys("s"),
+		key.WithHelp("s", "status"),
+	)
 )
 
 func NewEnter(desc string) key.Binding {

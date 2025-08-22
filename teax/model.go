@@ -1,6 +1,9 @@
 package teax
 
 import (
+	"context"
+	"time"
+
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/style"
 
@@ -10,8 +13,11 @@ import (
 	"github.com/donderom/bubblon"
 )
 
+const statusTimeout = time.Millisecond * 2000
+
 type Dataset interface {
 	Save() error
+	Status(ctx context.Context) tea.Model
 }
 
 type Synced[Item list.DefaultItem] struct {
@@ -29,6 +35,7 @@ type Model[Item list.DefaultItem] struct {
 	Mode     Mode
 	Dataset  Dataset
 	NewModel func(*Item) tea.Model
+	Parent   func() tea.Model
 	InSync   bool
 }
 
@@ -51,6 +58,9 @@ func (m Model[Item]) Update(msg tea.Msg) (Model[Item], tea.Cmd) {
 
 		if key.Matches(msg, keyset.Esc) {
 			if m.Mode == nil && m.List.Unfiltered() {
+				if m.Parent != nil {
+					return m, bubblon.Replace(m.Parent())
+				}
 				return m, bubblon.Close
 			}
 			m.Mode = nil
@@ -148,6 +158,11 @@ func (m Model[Item]) Update(msg tea.Msg) (Model[Item], tea.Cmd) {
 				m.Mode = m.Form.Delete
 			}
 			return m, nil
+
+		case key.Matches(msg, keyset.Status):
+			ctx, cancel := context.WithTimeout(context.Background(), statusTimeout)
+			defer cancel()
+			return m, bubblon.Open(m.Dataset.Status(ctx))
 		}
 	}
 

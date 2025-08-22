@@ -38,10 +38,16 @@ var (
 	fullKeys []key.Binding = []key.Binding{
 		keyset.Next,
 		keyset.Prev,
+		keyset.Status,
 	}
 )
 
-func New(qa *squad.QA, context []rune, dataset teax.Dataset) Question {
+func New(
+	qa *squad.QA,
+	context []rune,
+	dataset teax.Dataset,
+	parent func() tea.Model,
+) Question {
 	delegate := teax.Delegate[Item]{
 		Style:         answerStyle(context, qa.Impossible),
 		ItemName:      qa.Modifier() + "answer",
@@ -67,6 +73,7 @@ func New(qa *squad.QA, context []rune, dataset teax.Dataset) Question {
 			Form:     form,
 			NewModel: func(_ *Item) tea.Model { return nil },
 			Actions:  actions,
+			Parent:   parent,
 		},
 		viewport: teax.NewViewport[squad.Answer](),
 		qa:       qa,
@@ -87,9 +94,7 @@ func (m Question) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.updateContext()
 		return m, nil
-	}
 
-	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		if m.Mode == nil && key.Matches(msg, keyset.Next, keyset.Prev) {
 			m.viewport, cmd = m.viewport.Update(msg)

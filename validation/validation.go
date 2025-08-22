@@ -37,6 +37,10 @@ func (t ItemType) String() string {
 
 type Path map[ItemType]int
 
+func (p Path) To(itemType ItemType) int {
+	return p[itemType]
+}
+
 type ValidationResult struct {
 	Message string
 	Path    Path

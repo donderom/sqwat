@@ -1,13 +1,16 @@
 package splash
 
 import (
+	"context"
 	"fmt"
 	"os"
 
 	"github.com/donderom/sqwat/app"
 	"github.com/donderom/sqwat/squad"
+	"github.com/donderom/sqwat/status"
 	"github.com/donderom/sqwat/style"
 	"github.com/donderom/sqwat/teax"
+	"github.com/donderom/sqwat/validation"
 
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
@@ -115,4 +118,9 @@ func (d dataset) Save() error {
 	}
 
 	return nil
+}
+
+func (d dataset) Status(ctx context.Context) tea.Model {
+	results := validation.Run(ctx, d.data)
+	return status.NewStatus(d.filename, d.data, results, d)
 }

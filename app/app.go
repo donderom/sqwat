@@ -1,6 +1,8 @@
 package app
 
 import (
+	"slices"
+
 	"github.com/donderom/sqwat/article"
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/squad"
@@ -67,12 +69,16 @@ var (
 		keyset.Delete,
 	}
 
+	fullKeys []key.Binding = []key.Binding{
+		keyset.Status,
+	}
+
 	delegate teax.Delegate[Item] = teax.Delegate[Item]{
 		Style:           articleStyle,
 		ItemName:        "article",
 		ShowDescription: true,
 		ShortHelpKeys:   keys,
-		FullHelpKeys:    keys,
+		FullHelpKeys:    slices.Concat(keys, fullKeys),
 	}
 )
 
@@ -84,7 +90,7 @@ func New(squad *squad.SQuAD, title string, dataset teax.Dataset) App {
 			Dataset: dataset,
 			Form:    form,
 			NewModel: func(item *Item) tea.Model {
-				return article.New(item, dataset)
+				return article.New(item, dataset, nil)
 			},
 			Actions: actions,
 		},
