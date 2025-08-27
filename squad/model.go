@@ -1,7 +1,8 @@
 package squad
 
 import (
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"fmt"
 	"io"
 	"slices"
@@ -55,8 +56,7 @@ var _ text.Range = Answer{}
 
 func Load(r io.Reader) (*SQuAD, error) {
 	var squad SQuAD
-	decoder := json.NewDecoder(r)
-	if err := decoder.Decode(&squad); err != nil {
+	if err := json.UnmarshalRead(r, &squad); err != nil {
 		return nil, err
 	}
 
@@ -92,7 +92,7 @@ func (s *SQuAD) All() []Article {
 }
 
 func (s *SQuAD) Save(w io.Writer) error {
-	jsonData, err := json.MarshalIndent(s, "", "  ")
+	jsonData, err := json.Marshal(s, jsontext.WithIndent("  "))
 	if err != nil {
 		return err
 	}
