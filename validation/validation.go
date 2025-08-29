@@ -209,9 +209,7 @@ func validate(
 
 	var wg sync.WaitGroup
 	for range maxWorkers {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			for {
 				select {
 				case <-ctx.Done():
@@ -229,7 +227,7 @@ func validate(
 					}
 				}
 			}
-		}()
+		})
 	}
 
 	go func() {
