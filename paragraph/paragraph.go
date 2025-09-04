@@ -18,8 +18,12 @@ import (
 )
 
 type Inverted struct{}
+type UIDGenerated struct{}
 
-const invert = teax.Confirmation[Inverted]("Invert question possibility?")
+const (
+	invert = teax.Confirmation[Inverted]("Invert question possibility?")
+	genuid = teax.Confirmation[UIDGenerated]("Generate unique ID?")
+)
 
 type Item = squad.QA
 
@@ -112,6 +116,9 @@ func (m Paragraph) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case Inverted:
 		return m.update(func(index int) { m.paragraph.Invert(index) })
+
+	case UIDGenerated:
+		return m.update(func(index int) { m.paragraph.QAs[index].GenerateID() })
 	}
 
 	if m.Mode == nil && !m.List.Filtering() {
@@ -136,6 +143,10 @@ func (m Paragraph) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 				return m, nil
 
+			case key.Matches(msg, keyset.GenerateUID) && m.isEmptyID():
+				m.Mode = genuid
+				return m, nil
+
 			case key.Matches(msg, keyset.Next, keyset.Prev):
 				m.viewport, cmd = m.viewport.Update(msg)
 				return m, cmd
@@ -153,6 +164,7 @@ func (m Paragraph) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m Paragraph) View() string {
 	numSections := 3
 
+	m.List.AdditionalFullHelpKeys = m.fullKeys()
 	helpView := m.HelpView()
 	m.List.DecreaseHeight(lipgloss.Height(helpView))
 
@@ -175,6 +187,21 @@ func (m Paragraph) View() string {
 
 	sections = append(sections, style.Bot.Render(helpView))
 	return lipgloss.JoinVertical(lipgloss.Left, sections...)
+}
+
+func (m Paragraph) isEmptyID() bool {
+	return m.List.ItemSelected() && m.Coll.Get(m.List.GlobalIndex()).IsEmptyID()
+}
+
+func (m Paragraph) fullKeys() func() []key.Binding {
+	if m.isEmptyID() {
+		keys := m.List.AdditionalFullHelpKeys
+		return func() []key.Binding {
+			return append(keys(), keyset.GenerateUID)
+		}
+	}
+
+	return m.List.AdditionalFullHelpKeys
 }
 
 func (m *Paragraph) updateContext() {

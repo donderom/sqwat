@@ -80,6 +80,11 @@ var (
 		key.WithKeys("s"),
 		key.WithHelp("s", "status"),
 	)
+
+	GenerateUID key.Binding = key.NewBinding(
+		key.WithKeys("u"),
+		key.WithHelp("u", "generate UID"),
+	)
 )
 
 func NewEnter(desc string) key.Binding {

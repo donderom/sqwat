@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"slices"
+	"strings"
 	"unicode/utf8"
 
 	"github.com/charmbracelet/bubbles/list"
@@ -268,6 +269,10 @@ func (q *QA) All() []Answer {
 	return q.Answers()
 }
 
+func (q *QA) GenerateID() {
+	q.Id = uuid.New().String()
+}
+
 func (q QA) Highlight() lipgloss.Style {
 	if q.Impossible {
 		return style.Alt
@@ -286,6 +291,10 @@ func (q QA) OutOfRange(context []rune) bool {
 	return slices.IndexFunc(q.Answers(), func(a Answer) bool {
 		return !a.IsIn(context)
 	}) != -1
+}
+
+func (q QA) IsEmptyID() bool {
+	return strings.TrimSpace(q.Id) == ""
 }
 
 func (q QA) Title() string { return q.Question }

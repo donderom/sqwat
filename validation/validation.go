@@ -130,7 +130,7 @@ var ValidateEmptyQAs = validateParagraph(
 var ValidateEmptyID = validateQuestion(
 	"Empty ID",
 	func(qa squad.QA, _ squad.Paragraph) bool {
-		return strings.TrimSpace(qa.Id) == ""
+		return qa.IsEmptyID()
 	},
 )
 
