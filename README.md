@@ -17,6 +17,7 @@ A TUI editor for files in the [Stanford Question Answering Dataset](https://rajp
 * Supports both SQuAD versions 1.1 and 2.0
 * Full-text search across all fields
 * Highlights answers within the context with validation
+* Accumulated warnings with navigation
 
 ## Installation
 
