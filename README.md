@@ -19,6 +19,8 @@ A TUI editor for files in the [Stanford Question Answering Dataset](https://rajp
 * Highlights answers within the context with validation
 * Accumulated warnings with navigation
 
+![demo](https://github.com/user-attachments/assets/eeb5cb91-1cdf-49b3-9ca0-ac43117a9e7c)
+
 ## Installation
 
 Install `sqwat` with Go:
