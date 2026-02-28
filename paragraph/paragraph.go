@@ -190,7 +190,9 @@ func (m Paragraph) View() string {
 }
 
 func (m Paragraph) isEmptyID() bool {
-	return m.List.ItemSelected() && m.Coll.Get(m.List.GlobalIndex()).IsEmptyID()
+	return !m.InSync &&
+		m.List.ItemSelected() &&
+		m.Coll.Get(m.List.GlobalIndex()).IsEmptyID()
 }
 
 func (m Paragraph) fullKeys() func() []key.Binding {
