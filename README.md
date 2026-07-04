@@ -2,7 +2,6 @@
 
 [![Release](https://img.shields.io/github/v/release/donderom/sqwat.svg?style=flat-square&color=6e54da)](https://github.com/donderom/sqwat/releases)
 [![Build](https://img.shields.io/github/actions/workflow/status/donderom/sqwat/build.yml?style=flat-square&logo=github)](https://github.com/donderom/sqwat/actions/workflows/build.yml)
-[![ReportCard](https://goreportcard.com/badge/github.com/donderom/sqwat?style=flat-square)](https://goreportcard.com/report/donderom/sqwat)
 [![License](https://img.shields.io/badge/license-MIT-463494?style=flat-square)](https://github.com/donderom/sqwat/blob/main/LICENSE)
 
 <p align="center">
