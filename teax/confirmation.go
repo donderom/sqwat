@@ -4,9 +4,9 @@ import (
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/style"
 
-	"github.com/charmbracelet/bubbles/help"
-	"github.com/charmbracelet/bubbles/key"
-	tea "github.com/charmbracelet/bubbletea"
+	"charm.land/bubbles/v2/help"
+	"charm.land/bubbles/v2/key"
+	tea "charm.land/bubbletea/v2"
 )
 
 type Confirmation[M tea.Msg] string
@@ -22,8 +22,8 @@ func (c Confirmation[M]) Update(msg tea.Msg) (Mode, tea.Cmd) {
 	return c, nil
 }
 
-func (c Confirmation[M]) View() string {
-	return style.Mid.Inherit(style.Highlight).Render(string(c))
+func (c Confirmation[M]) View() tea.View {
+	return tea.NewView(style.Mid.Inherit(style.Highlight).Render(string(c)))
 }
 
 func (c Confirmation[M]) Height() int {

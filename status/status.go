@@ -14,10 +14,10 @@ import (
 	"github.com/donderom/sqwat/teax"
 	"github.com/donderom/sqwat/validation"
 
-	"github.com/charmbracelet/bubbles/key"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/key"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 type Item = validation.ValidationResult
@@ -93,14 +93,14 @@ func (m status) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m status) View() string {
+func (m status) View() tea.View {
 	helpView := m.list.Help.View(m.list)
 	m.list.DecreaseHeight(lipgloss.Height(helpView))
 
-	return lipgloss.JoinVertical(lipgloss.Left,
+	return tea.NewView(lipgloss.JoinVertical(lipgloss.Left,
 		style.Top.Render(m.list.View()),
 		style.Bot.Render(helpView),
-	)
+	))
 }
 
 func (s status) model(result validation.ValidationResult) tea.Model {

@@ -4,9 +4,9 @@ import (
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/text"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/list"
-	tea "github.com/charmbracelet/bubbletea"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/list"
+	tea "charm.land/bubbletea/v2"
 )
 
 type ViewList[Item list.DefaultItem, Child text.Range] struct {

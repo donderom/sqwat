@@ -9,10 +9,10 @@ import (
 	"github.com/donderom/sqwat/style"
 	"github.com/donderom/sqwat/teax"
 
-	"github.com/charmbracelet/bubbles/key"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/key"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 type Item = squad.Article
@@ -112,7 +112,7 @@ func (m App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m App) View() string {
+func (m App) View() tea.View {
 	numSections := 2
 
 	helpView := m.HelpView()
@@ -127,13 +127,13 @@ func (m App) View() string {
 	sections = append(sections, m.ListView())
 
 	if m.Mode != nil {
-		sections = append(sections, m.Mode.View())
+		sections = append(sections, m.Mode.View().Content)
 	}
 
 	sections = append(sections, style.Bot.Render(helpView))
-	return lipgloss.JoinVertical(lipgloss.Left, sections...)
+	return tea.NewView(lipgloss.JoinVertical(lipgloss.Left, sections...))
 }
 
 func typeEnter(l teax.List[Item], _ tea.Cmd) (teax.List[Item], tea.Cmd) {
-	return l, bubblon.Cmd(tea.KeyMsg(tea.Key{Type: tea.KeyEnter}))
+	return l, bubblon.Cmd(tea.KeyPressMsg{Code: tea.KeyEnter})
 }

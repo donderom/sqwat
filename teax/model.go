@@ -7,10 +7,10 @@ import (
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/style"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/list"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/list"
+	tea "charm.land/bubbletea/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 const statusTimeout = time.Millisecond * 2000
@@ -68,7 +68,7 @@ func (m Model[Item]) Update(msg tea.Msg) (Model[Item], tea.Cmd) {
 
 	case NewMode:
 		m.Mode = msg.Mode
-		return m, tea.WindowSize()
+		return m, tea.RequestWindowSize
 
 	case tea.WindowSizeMsg:
 		m.List.Resize(msg)
@@ -170,8 +170,8 @@ func (m Model[Item]) Update(msg tea.Msg) (Model[Item], tea.Cmd) {
 	return m, cmd
 }
 
-func (m Model[Item]) View() string {
-	return ""
+func (m Model[Item]) View() tea.View {
+	return tea.NewView("")
 }
 
 func (m Model[Item]) ListView() string {

@@ -12,9 +12,9 @@ import (
 	"github.com/donderom/sqwat/teax"
 	"github.com/donderom/sqwat/validation"
 
-	"github.com/charmbracelet/bubbles/spinner"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/spinner"
+	tea "charm.land/bubbletea/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 type loaded struct {
@@ -70,10 +70,12 @@ func (m Splash) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m Splash) View() string {
-	return style.Center(m.width, m.height).Render(
+func (m Splash) View() tea.View {
+	view := tea.NewView(style.Center(m.width, m.height).Render(
 		fmt.Sprintf("%s Loading file %s...", m.spinner.View(), m.filename),
-	)
+	))
+	view.AltScreen = true
+	return view
 }
 
 func (m Splash) load() tea.Cmd {

@@ -1,11 +1,13 @@
 package style
 
-import "github.com/charmbracelet/lipgloss"
+import "charm.land/lipgloss/v2"
+import "charm.land/lipgloss/v2/compat"
+import "image/color"
 
 type colors struct {
-	Green lipgloss.TerminalColor
-	Red   lipgloss.TerminalColor
-	Blue  lipgloss.TerminalColor
+	Green color.Color
+	Red   color.Color
+	Blue  color.Color
 }
 
 type palette struct {
@@ -15,7 +17,7 @@ type palette struct {
 
 type border struct {
 	Style lipgloss.Border
-	Color lipgloss.TerminalColor
+	Color color.Color
 }
 
 type borders struct {
@@ -47,7 +49,9 @@ var (
 	SepBot = lipgloss.NewStyle().MarginBottom(1)
 
 	Highlight = lipgloss.NewStyle().Foreground(
-		lipgloss.AdaptiveColor{Light: "#EE6FF8", Dark: "#EE6FF8"},
+		compat.AdaptiveColor{
+			Light: lipgloss.Color("#EE6FF8"),
+			Dark:  lipgloss.Color("#EE6FF8")},
 	)
 	Error = lipgloss.NewStyle().Foreground(Palette.Red)
 	Faint = lipgloss.NewStyle().Faint(true)

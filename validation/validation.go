@@ -9,7 +9,7 @@ import (
 
 	"github.com/donderom/sqwat/squad"
 
-	"github.com/charmbracelet/bubbles/list"
+	"charm.land/bubbles/v2/list"
 )
 
 type ItemType uint8

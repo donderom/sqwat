@@ -3,7 +3,7 @@ package teax_test
 import (
 	"testing"
 
-	tea "github.com/charmbracelet/bubbletea"
+	tea "charm.land/bubbletea/v2"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/donderom/sqwat/teax"
@@ -15,7 +15,7 @@ func TestConfirmationUpdate(t *testing.T) {
 	t.Parallel()
 
 	confirmation := teax.Confirmation[Message]("")
-	_, cmd := confirmation.Update(tea.KeyMsg{Type: tea.KeyEnter})
+	_, cmd := confirmation.Update(tea.KeyPressMsg{Code: tea.KeyEnter})
 	assert.Equal(t, Message{}, cmd())
 }
 
@@ -24,5 +24,5 @@ func TestConfirmationView(t *testing.T) {
 
 	msg := "message"
 	confirmation := teax.Confirmation[Message](msg)
-	assert.Contains(t, confirmation.View(), msg)
+	assert.Contains(t, confirmation.View().Content, msg)
 }

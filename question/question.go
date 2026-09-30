@@ -9,9 +9,9 @@ import (
 	"github.com/donderom/sqwat/style"
 	"github.com/donderom/sqwat/teax"
 
-	"github.com/charmbracelet/bubbles/key"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	"charm.land/bubbles/v2/key"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 )
 
 type Item = squad.Answer
@@ -107,7 +107,7 @@ func (m Question) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m Question) View() string {
+func (m Question) View() tea.View {
 	numSections := 3
 
 	helpView := m.HelpView()
@@ -124,14 +124,14 @@ func (m Question) View() string {
 	if m.Mode != nil {
 		m.viewport.Blur()
 	}
-	sections = append(sections, m.viewport.View())
+	sections = append(sections, m.viewport.View().Content)
 
 	if m.Mode != nil {
-		sections = append(sections, m.Mode.View())
+		sections = append(sections, m.Mode.View().Content)
 	}
 
 	sections = append(sections, style.Bot.Render(helpView))
-	return lipgloss.JoinVertical(lipgloss.Left, sections...)
+	return tea.NewView(lipgloss.JoinVertical(lipgloss.Left, sections...))
 }
 
 func (m *Question) updateContext() {

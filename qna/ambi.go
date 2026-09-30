@@ -9,11 +9,11 @@ import (
 	"github.com/donderom/sqwat/teax"
 	"github.com/donderom/sqwat/text"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/list"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/list"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 type Disambiguated struct {
@@ -126,16 +126,16 @@ func (m Ambi) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m Ambi) View() string {
+func (m Ambi) View() tea.View {
 	helpView := m.list.Help.View(m.list)
 	m.list.DecreaseHeight(lipgloss.Height(helpView))
 
-	return lipgloss.JoinVertical(
+	return tea.NewView(lipgloss.JoinVertical(
 		lipgloss.Left,
 		style.Top.Render(m.list.View()),
-		m.list.Viewport.View(),
+		m.list.Viewport.View().Content,
 		style.Bot.Render(helpView),
-	)
+	))
 }
 
 func (m *Ambi) updateContext() {

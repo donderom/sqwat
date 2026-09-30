@@ -4,12 +4,12 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/help"
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/textinput"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/help"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/textinput"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/squad"
@@ -80,7 +80,7 @@ func (m Title) Update(msg tea.Msg) (teax.Mode, tea.Cmd) {
 	return m, cmd
 }
 
-func (m Title) View() string {
+func (m Title) View() tea.View {
 	numSections := 1
 	if m.err != nil {
 		numSections++
@@ -94,7 +94,7 @@ func (m Title) View() string {
 	}
 
 	sections = append(sections, m.input.View())
-	return style.Mid.Render(lipgloss.JoinVertical(lipgloss.Left, sections...))
+	return tea.NewView(style.Mid.Render(lipgloss.JoinVertical(lipgloss.Left, sections...)))
 }
 
 func (m Title) Height() int {
@@ -110,14 +110,16 @@ func (m Title) KeyMap() help.KeyMap {
 }
 
 func (m Title) Resize(width, height int) teax.Mode {
-	m.input.Width = width - 1
+	m.input.SetWidth(width - 1)
 	return m
 }
 
 func newTitle(mode mode, width int) Title {
 	input := textinput.New()
-	input.PromptStyle = style.Highlight
-	input.Width = width - 1
+	styles := textinput.DefaultStyles(true)
+	styles.Focused.Prompt = style.Highlight
+	input.SetStyles(styles)
+	input.SetWidth(width - 1)
 	return Title{
 		input: input,
 		mode:  mode,

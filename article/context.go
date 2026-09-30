@@ -4,12 +4,12 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/help"
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/textarea"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/help"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/textarea"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/squad"
@@ -91,7 +91,7 @@ func (m Context) Update(msg tea.Msg) (teax.Mode, tea.Cmd) {
 	return m, cmd
 }
 
-func (m Context) View() string {
+func (m Context) View() tea.View {
 	numSections := 1
 	if m.err != nil {
 		numSections++
@@ -105,7 +105,7 @@ func (m Context) View() string {
 	}
 
 	sections = append(sections, m.area.View())
-	return style.Mid.Render(lipgloss.JoinVertical(lipgloss.Left, sections...))
+	return tea.NewView(style.Mid.Render(lipgloss.JoinVertical(lipgloss.Left, sections...)))
 }
 
 func (m Context) Height() int {
@@ -129,8 +129,10 @@ func (m Context) Resize(width, height int) teax.Mode {
 func newContext(mode mode) Context {
 	input := textarea.New()
 	input.Prompt = lipgloss.NormalBorder().Left
-	input.FocusedStyle.LineNumber = style.Faint
-	input.FocusedStyle.CursorLineNumber = style.Highlight
+	styles := textarea.DefaultStyles(true)
+	styles.Focused.LineNumber = style.Faint
+	styles.Focused.CursorLineNumber = style.Highlight
+	input.SetStyles(styles)
 	return Context{
 		area: input,
 		mode: mode,

@@ -6,8 +6,8 @@ import (
 
 	"github.com/donderom/sqwat/splash"
 
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/donderom/bubblon"
+	tea "charm.land/bubbletea/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 		fail(err)
 	}
 
-	p := tea.NewProgram(controller, tea.WithAltScreen())
+	p := tea.NewProgram(controller)
 	m, err := p.Run()
 	if err != nil {
 		fail(err)

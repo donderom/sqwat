@@ -1,12 +1,12 @@
 package splash
 
 import (
-	"github.com/charmbracelet/bubbles/filepicker"
-	"github.com/charmbracelet/bubbles/help"
-	"github.com/charmbracelet/bubbles/key"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/filepicker"
+	"charm.land/bubbles/v2/help"
+	"charm.land/bubbles/v2/key"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 
 	"github.com/donderom/sqwat/keyset"
 	"github.com/donderom/sqwat/style"
@@ -66,17 +66,17 @@ func (m picker) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m picker) View() string {
+func (m picker) View() tea.View {
 	if m.help.ShowAll {
 		m.filepicker.SetHeight(m.height - len(m.FullHelp()[0]) - 4)
 	}
 
-	return lipgloss.JoinVertical(
+	return tea.NewView(lipgloss.JoinVertical(
 		lipgloss.Left,
 		title,
 		m.filepicker.View(),
 		style.Bot.Render(m.HelpView()),
-	)
+	))
 }
 
 func (m picker) ShortHelp() []key.Binding {

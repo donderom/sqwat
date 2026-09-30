@@ -1,6 +1,6 @@
 package keyset
 
-import "github.com/charmbracelet/bubbles/key"
+import "charm.land/bubbles/v2/key"
 
 var (
 	Quit key.Binding = key.NewBinding(

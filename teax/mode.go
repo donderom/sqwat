@@ -1,13 +1,13 @@
 package teax
 
 import (
-	"github.com/charmbracelet/bubbles/help"
-	tea "github.com/charmbracelet/bubbletea"
+	"charm.land/bubbles/v2/help"
+	tea "charm.land/bubbletea/v2"
 )
 
 type Mode interface {
 	Update(msg tea.Msg) (Mode, tea.Cmd)
-	View() string
+	View() tea.View
 	Height() int
 	KeyMap() help.KeyMap
 	Resize(width, height int) Mode

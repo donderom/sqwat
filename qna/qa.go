@@ -11,12 +11,12 @@ import (
 	"github.com/donderom/sqwat/teax"
 	"github.com/donderom/sqwat/text"
 
-	"github.com/charmbracelet/bubbles/help"
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/textinput"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/donderom/bubblon"
+	"charm.land/bubbles/v2/help"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/textinput"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/donderom/bubblon/v2"
 )
 
 type mode uint8
@@ -76,12 +76,12 @@ func NewUpdateForm(context string, qa squad.QA, maxWidth int) (QA, tea.Cmd) {
 
 func NewQA(context string, maxWidth int, mode mode, navigation bool) QA {
 	q := textinput.New()
-	q.Width = maxWidth
+	q.SetWidth(maxWidth)
 	q.Prompt = ""
 	q.Validate = validateQuestion
 
 	a := textinput.New()
-	a.Width = maxWidth
+	a.SetWidth(maxWidth)
 	a.Prompt = ""
 	a.Validate = validateAnswer(context, mode, navigation)
 
@@ -144,7 +144,7 @@ func (m QA) Update(msg tea.Msg) (teax.Mode, tea.Cmd) {
 	return m, cmd
 }
 
-func (m QA) View() string {
+func (m QA) View() tea.View {
 	sections := make([]string, 0, 5)
 
 	if m.err != nil {
@@ -160,7 +160,7 @@ func (m QA) View() string {
 		m.inputView(inputAnswer),
 	)
 
-	return style.Mid.Render(lipgloss.JoinVertical(lipgloss.Left, sections...))
+	return tea.NewView(style.Mid.Render(lipgloss.JoinVertical(lipgloss.Left, sections...)))
 }
 
 func (m QA) Height() int {
@@ -185,7 +185,7 @@ func (m QA) KeyMap() help.KeyMap {
 
 func (m QA) Resize(width, height int) teax.Mode {
 	for i := range m.inputs {
-		m.inputs[i].Width = width
+		m.inputs[i].SetWidth(width)
 	}
 	return m
 }

@@ -8,16 +8,20 @@ import (
 	"github.com/donderom/sqwat/style"
 	"github.com/donderom/sqwat/text"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/viewport"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	"charm.land/bubbles/v2/key"
+	"charm.land/bubbles/v2/viewport"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"charm.land/lipgloss/v2/compat"
 	"github.com/muesli/reflow/wordwrap"
 )
 
 var viewportStyle lipgloss.Style = lipgloss.NewStyle().
 	Border(lipgloss.NormalBorder()).
-	BorderForeground(lipgloss.AdaptiveColor{Light: "#9B9B9B", Dark: "#5C5C5C"}).
+	BorderForeground(compat.AdaptiveColor{
+		Light: lipgloss.Color("#9B9B9B"),
+		Dark:  lipgloss.Color("#5C5C5C"),
+	}).
 	PaddingLeft(1).
 	PaddingRight(1).
 	MarginLeft(2).
@@ -28,7 +32,9 @@ type Viewport[T text.Range] struct {
 }
 
 func NewViewport[T text.Range]() Viewport[T] {
-	return Viewport[T]{viewport: viewport.New(0, 0)}
+	return Viewport[T]{
+		viewport: viewport.New(viewport.WithWidth(0), viewport.WithHeight(0)),
+	}
 }
 
 func (m Viewport[T]) Update(msg tea.Msg) (Viewport[T], tea.Cmd) {
@@ -93,21 +99,21 @@ func (m *Viewport[T]) Highlight(
 }
 
 func (m *Viewport[T]) SetContent(content string) {
-	wrapped := wordwrap.String(content, m.viewport.Width-1)
+	wrapped := wordwrap.String(content, m.viewport.Width()-1)
 	m.viewport.SetContent(wrapped)
 	m.viewport.SetYOffset(0)
 }
 
-func (m Viewport[T]) View() string {
-	return viewportStyle.Render(m.viewport.View())
+func (m Viewport[T]) View() tea.View {
+	return tea.NewView(viewportStyle.Render(m.viewport.View()))
 }
 
 func (m *Viewport[T]) Resize(width, height int) {
 	padding := viewportStyle.GetHorizontalPadding()
-	m.viewport.Width = width - padding*2
+	m.viewport.SetWidth(width - padding*2)
 
 	v := viewportStyle.GetVerticalFrameSize()
-	m.viewport.Height = height - v
+	m.viewport.SetHeight(height - v)
 }
 
 func (m *Viewport[T]) Blur() {
@@ -116,5 +122,5 @@ func (m *Viewport[T]) Blur() {
 
 func (m Viewport[T]) Height() int {
 	v := viewportStyle.GetVerticalFrameSize()
-	return m.viewport.Height + v
+	return m.viewport.Height() + v
 }
