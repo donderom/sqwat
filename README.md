@@ -25,7 +25,7 @@ A TUI editor for files in the [Stanford Question Answering Dataset](https://rajp
 Install `sqwat` with Go:
 
 ```sh
-GOEXPERIMENT=jsonv2 go install github.com/donderom/sqwat@latest
+go install github.com/donderom/sqwat@latest
 ```
 
 Or download the latest [release](https://github.com/donderom/sqwat/releases) for your system and architecture.
