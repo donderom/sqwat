@@ -8,10 +8,10 @@ import (
 	"slices"
 	"strings"
 	"unicode/utf8"
+	"uuid"
 
 	"charm.land/bubbles/v2/list"
 	"charm.land/lipgloss/v2"
-	"github.com/google/uuid"
 
 	"github.com/donderom/sqwat/style"
 	"github.com/donderom/sqwat/text"

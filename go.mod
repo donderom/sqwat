@@ -7,7 +7,6 @@ require (
 	charm.land/bubbletea/v2 v2.0.8
 	charm.land/lipgloss/v2 v2.0.5
 	github.com/donderom/bubblon/v2 v2.0.0
-	github.com/google/uuid v1.6.0
 	github.com/muesli/reflow v0.3.0
 	github.com/stretchr/testify v1.11.1
 )
